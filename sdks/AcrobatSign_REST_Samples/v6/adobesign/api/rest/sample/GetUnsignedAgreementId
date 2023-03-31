@@ -51,17 +51,16 @@ public class GetUnsignedAgreementId{
 				  		} 
 				  	};	
 		  
-		// Install the all-trusting trust manager
-		final SSLContext sc = SSLContext.getInstance("SSL");
-		sc.init(null, trustAllCerts, new java.security.SecureRandom());
-		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-		// Create all-trusting host name verifier
-		HostnameVerifier allHostsValid = new HostnameVerifier(){public boolean verify(String hostname, SSLSession session){return true;}};
-		 HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-	  
-	  
-	  //You can create a method in RESTAPIUtil and call it here aswell
-	  // Get oauth access token to make further API calls.
+			// Install the all-trusting trust manager
+			final SSLContext sc = SSLContext.getInstance("SSL");
+			sc.init(null, trustAllCerts, new java.security.SecureRandom());
+			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+			
+			// Create all-trusting host name verifier
+			HostnameVerifier allHostsValid = new HostnameVerifier(){public boolean verify(String hostname, SSLSession session){return true;}};
+			    
+			    HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+	    // Get oauth access token to make further API calls.
 	    String accessToken = RestApiOAuthTokens.getOauthAccessToken(authRequestJSONFileName);
 
 	    JSONArray agreementList = RestApiAgreements.getMyAgreements(accessToken);
@@ -72,7 +71,9 @@ public class GetUnsignedAgreementId{
 		    	for (Object eachAgreement : agreementList)
 		    	{
 		    		JSONObject agreement = (JSONObject) eachAgreement;
-		    				if (!((String) agreement.get("status")).equalsIgnoreCase("SIGNED")) 
+		    		
+		    		
+				    		if (!((String) agreement.get("status")).equalsIgnoreCase("SIGNED")) 
 			                {
 			                    String agreementId = (String) agreement.get("id");
 			                    System.out.println("Not yet signed Agreement Named: " + agreement.get("name")+" with agreement ID:" + agreementId
@@ -81,6 +82,11 @@ public class GetUnsignedAgreementId{
 			                }
 	            }
 		    	
-	  }
+	     
+	    	
+	    	
+	    	
+	   
+	    }
 	  }
 	}
